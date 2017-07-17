@@ -1,6 +1,10 @@
 {
   "name": "titanium-date-input",
   "main": "titanium-date-input.html",
+  "version": "1.0.0",
+  "authors": [
+    "Kasey Hinton kasey-hinton@leavitt.com"
+  ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
     "moment": "^2.15.2",
