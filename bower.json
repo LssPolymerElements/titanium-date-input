@@ -1,0 +1,21 @@
+{
+  "name": "titanium-date-input",
+  "main": "titanium-date-input.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "moment": "^2.15.2",
+    "paper-input": "PolymerElements/paper-input#^2.0.0",
+    "iron-input": "PolymerElements/iron-input#^2.0.0",
+    "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^2.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "iron-form": "PolymerElements/iron-form#^2.0.0"
+  },
+  "demos": {
+    "Demo": "demo/index.html"
+  }
+}

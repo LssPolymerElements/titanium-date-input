@@ -1,0 +1,156 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../paper-input/paper-input.html">
+
+<link rel="import" href="titanium-moment.html">
+<!--
+`titanium-date-input`
+
+
+@demo demo/index.html
+-->
+<dom-module id="titanium-date-input">
+    <template>
+        <paper-input id="input" always-float-label placeholder="[[placeholder]]" label="[[label]]" error-message="[[errorMessage]]"
+            required="[[required]]" auto-validate allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" invalid="{{invalid}}"
+            disabled="[[disabled]]" date="{{date}}"></paper-input>
+    </template>
+
+    <script>
+        'use strict';
+        class TitaniumDateInput extends Polymer.mixinBehaviors([Polymer.PaperInputBehavior, Polymer.IronFormElementBehavior],
+            Polymer.Element) {
+            static get is() {
+                return 'titanium-date-input';
+            }
+
+            static get properties() {
+                return {
+                    label: {
+                        type: String
+                    },
+                    value: {
+                        type: String,
+                        notify: true,
+                        observer: '_valueChanged'
+                    },
+                    invalid: {
+                        type: Boolean,
+                        value: false,
+                        notify: true
+                    },
+                    autoValidate: {
+                        type: Boolean,
+                        value: false,
+                        notify: true
+                    },
+                    required: {
+                        type: Boolean,
+                        value: false,
+                        notify: true
+                    },
+                    disabled: {
+                        type: Boolean,
+                        value: false
+                    },
+                    datePattern: {
+                        type: String,
+                        value: 'MM/DD/YYYY'
+                    },
+                    placeholder: {
+                        type: String,
+                        value: 'mm/dd/yyyy'
+                    },
+                    date: {
+                        type: Object,
+                        value: {},
+                        notify: true
+                    },
+                    errorMessage: {
+                        type: String
+                    }
+                }
+            }
+
+            static get observers() {
+                return [
+                    '_onFocusedChanged(focused)'
+                ]
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+                var regex = '';
+                regex = this.datePattern.replace(/\s/g, '\\s');
+                regex = regex.replace(/M/gi, '\d');
+                regex = regex.replace(/D/gi, '\\d');
+                regex = regex.replace(/Y/gi, '\\d');
+                regex = regex.replace(/\+/g, '\\+');
+                this.$.input.pattern = regex;
+            }
+
+            ready() {
+                super.ready();
+
+                if (this.value)
+                    this._handleAutoValidate();
+            }
+
+            _valueChanged(value, oldValue) {
+                if (typeof oldValue === 'undefined' || value === oldValue) {
+                    if (value.length === 10)
+                        this.set('date', new moment(value, this.datePattern));
+                    return;
+                }
+                value = value ? value.toString() : '';
+                let start = this.$.input.selectionStart;
+                let initialSlashesBeforeCaret = value.substr(0, start).split('/').length - 1;
+                value = value.replace(/\//g, '');
+                let shouldFormat = value.length <= this.datePattern.replace(/\//g, '').length;
+                let formattedValue = '';
+                let currentSlashIndex = 0;
+                let totalSlashesAdded = 0;
+                for (let i = 0; i < value.length; i++) {
+                    currentSlashIndex = this.datePattern.indexOf('/', currentSlashIndex);
+                    if (shouldFormat && i == (currentSlashIndex - totalSlashesAdded)) { // jshint ignore:line
+                        formattedValue += '/';
+                        currentSlashIndex++;
+                        totalSlashesAdded++;
+                    }
+                    formattedValue += value[i];
+                }
+                let updatedSlashesBeforeCaret = formattedValue.substr(0, start).split('/').length - 1;
+                let slashesDifference = updatedSlashesBeforeCaret - initialSlashesBeforeCaret;
+                this.updateValueAndPreserveCaret(formattedValue.trim());
+                this.$.input.selectionStart = this.$.input.selectionEnd = start + slashesDifference;
+
+
+                if (formattedValue.length === 10)
+                    this.set('date', new moment(formattedValue, this.datePattern));
+
+                this._handleAutoValidate();
+            }
+
+            _onFocusedChanged(focused) {
+                if (!focused)
+                    this._handleAutoValidate();
+            }
+
+            validate() {
+                let valid = this.$.input.validate();
+                if (this.value && this.value.length === 10) {
+                    this.invalid = !(moment(this.value, this.datePattern, true).isValid()); // jshint ignore:line
+                } else {
+                    this.invalid = !valid;
+                }
+                return valid;
+            }
+        }
+        customElements.define(TitaniumDateInput.is, TitaniumDateInput);
+    </script>
+</dom-module>
