@@ -16,14 +16,27 @@
 -->
 <dom-module id="titanium-date-input">
     <template>
-        <paper-input id="input" always-float-label placeholder="[[placeholder]]" label="[[label]]" error-message="[[errorMessage]]"
-            required="[[required]]" auto-validate allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" invalid="{{invalid}}"
-            disabled="[[disabled]]" date="{{date}}"></paper-input>
+        <style>
+             :host {
+                display: block;
+            }
+
+            paper-input {
+                width: 100%;
+                --paper-input-container: {
+                    padding-bottom: 0;
+                }
+                ;
+            }
+        </style>
+        <paper-input id="input" always-float-label placeholder="[[placeholder]]" validator="[[validator]]" label="[[label]]" error-message="[[errorMessage]]"
+            required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" invalid="{{invalid}}" disabled="[[disabled]]"
+            focused="{{focused}}"></paper-input>
     </template>
 
     <script>
         'use strict';
-        class TitaniumDateInput extends Polymer.mixinBehaviors([Polymer.PaperInputBehavior, Polymer.IronFormElementBehavior],
+        class TitaniumDateInput extends Polymer.mixinBehaviors([Polymer.IronFormElementBehavior],
             Polymer.Element) {
             static get is() {
                 return 'titanium-date-input';
@@ -46,12 +59,10 @@
                     },
                     autoValidate: {
                         type: Boolean,
-                        value: false,
                         notify: true
                     },
                     required: {
                         type: Boolean,
-                        value: false,
                         notify: true
                     },
                     disabled: {
@@ -72,6 +83,13 @@
                         notify: true
                     },
                     errorMessage: {
+                        type: String
+                    },
+                    focused: {
+                        type: Boolean,
+                        notify: true
+                    },
+                    validator: {
                         type: String
                     }
                 }
@@ -94,51 +112,54 @@
                 this.$.input.pattern = regex;
             }
 
-            ready() {
-                super.ready();
-
-                if (this.value)
-                    this._handleAutoValidate();
-            }
-
             _valueChanged(value, oldValue) {
-                if (typeof oldValue === 'undefined' || value === oldValue) {
-                    if (value.length === 10)
-                        this.set('date', new moment(value, this.datePattern));
+                if (typeof value === "object")
+                    value = moment(value, "MM/DD/YYYY").format("MM/DD/YYYY");
+
+                if (!value || value === oldValue)
                     return;
-                }
-                value = value ? value.toString() : '';
+
+                let originalString = value ? value.toString() : '';
+
                 let start = this.$.input.selectionStart;
-                let initialSlashesBeforeCaret = value.substr(0, start).split('/').length - 1;
-                value = value.replace(/\//g, '');
-                let shouldFormat = value.length <= this.datePattern.replace(/\//g, '').length;
+                let initialSlashesBeforeCaret = originalString.substr(0, start).split('/').length - 1;
+                originalString = originalString.replace(/\//g, '');
+                let shouldFormat = originalString.length <= this.datePattern.replace(/\//g, '').length;
                 let formattedValue = '';
                 let currentSlashIndex = 0;
                 let totalSlashesAdded = 0;
-                for (let i = 0; i < value.length; i++) {
+                for (let i = 0; i < originalString.length; i++) {
                     currentSlashIndex = this.datePattern.indexOf('/', currentSlashIndex);
                     if (shouldFormat && i == (currentSlashIndex - totalSlashesAdded)) { // jshint ignore:line
                         formattedValue += '/';
                         currentSlashIndex++;
                         totalSlashesAdded++;
                     }
-                    formattedValue += value[i];
+                    formattedValue += originalString[i];
                 }
                 let updatedSlashesBeforeCaret = formattedValue.substr(0, start).split('/').length - 1;
                 let slashesDifference = updatedSlashesBeforeCaret - initialSlashesBeforeCaret;
                 this.updateValueAndPreserveCaret(formattedValue.trim());
                 this.$.input.selectionStart = this.$.input.selectionEnd = start + slashesDifference;
 
+                if (this.autoValidate)
+                    this.validate();
+            }
 
-                if (formattedValue.length === 10)
-                    this.set('date', new moment(formattedValue, this.datePattern));
-
-                this._handleAutoValidate();
+            updateValueAndPreserveCaret(newValue) {
+                try {
+                    var start = this.inputElement.selectionStart;
+                    this.value = newValue;
+                    this.inputElement.selectionStart = start;
+                    this.inputElement.selectionEnd = start;
+                } catch (e) {
+                    this.value = newValue;
+                }
             }
 
             _onFocusedChanged(focused) {
-                if (!focused)
-                    this._handleAutoValidate();
+                if (!focused && this.autoValidate)
+                    this.validate();
             }
 
             validate() {
@@ -150,6 +171,7 @@
                 }
                 return valid;
             }
+
         }
         customElements.define(TitaniumDateInput.is, TitaniumDateInput);
     </script>

@@ -8,12 +8,14 @@
   <title>Titanium Date Input Demo</title>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="../../polymer/polymer.html">
   <!-- <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html"> -->
   <!-- <link rel="import" href="../../iron-demo-helpers/demo-snippet.html"> -->
 
+  <link rel="import" href="./x-demo.html">
   <link rel="import" href="../titanium-date-input.html">
   <link rel="import" href="../../iron-form/iron-form.html">
+  <link rel="import" href="../../polymer/polymer.html">
+  <link rel="import" href="../../paper-input/paper-input.html">
 
   <style is="custom-style" include="demo-pages-shared-styles">
     titanium-date-input {
@@ -21,48 +23,7 @@
     }
   </style>
 
-  <dom-module id="x-demo">
-    <template>
-      <iron-form id="form">
-        <form>
-          <h3>Titanium Date Input</h3>
-          <titanium-date-input label="My Birthday" auto-validate required error-message="Please use a valid date of birth"></titanium-date-input>
 
-          <titanium-date-input label="Mom's Birthday" value="03/20/1960" auto-validate required></titanium-date-input>
-
-          <titanium-date-input label="Dads's Birthday" value="06/04/1955" date="{{dadsBirthday}}" auto-validate required></titanium-date-input>
-
-          <titanium-date-input label="disabled" disabled value="06/04/1955" auto-validate required></titanium-date-input>
-
-          <titanium-date-input label="Not Required"></titanium-date-input>
-
-          <titanium-date-input label="Mom's Birthday" placeholder="Input date here" auto-validate required></titanium-date-input>
-        </form>
-      </iron-form>
-      <div>Dads birthday as a moment object: {{dadsBirthday}}</div>
-      <button on-click="validateButton">Validate Form</button>
-    </template>
-    <script>
-      class XDemo extends Polymer.Element {
-        static get is() {
-          return 'x-demo';
-        }
-
-        static get properties() {
-          return {
-            dadsBirthday: {
-              type: Object
-            }
-          }
-        }
-
-        validateButton(e) {
-          this.$.form.validate();
-        }
-      }
-      customElements.define(XDemo.is, XDemo);
-    </script>
-  </dom-module>
 </head>
 
 <body>
