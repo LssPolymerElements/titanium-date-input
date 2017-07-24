@@ -30,7 +30,10 @@
         </style>
         <paper-input id="input" always-float-label placeholder="[[placeholder]]" validator="[[validator]]" label="[[label]]" error-message="[[errorMessage]]"
             required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" invalid="{{invalid}}" disabled="[[disabled]]"
-            focused="{{focused}}"></paper-input>
+            focused="{{focused}}">
+            <slot name="prefix" slot="prefix"></slot>
+            <slot name="suffix" slot="suffix"></slot>
+        </paper-input>
     </template>
 
     <script>

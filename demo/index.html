@@ -15,6 +15,8 @@
   <link rel="import" href="../../iron-form/iron-form.html">
   <link rel="import" href="../../polymer/polymer.html">
   <link rel="import" href="../../paper-input/paper-input.html">
+  <link rel="import" href="../../iron-icon/iron-icon.html">
+  <link rel="import" href="../../iron-icons/iron-icons.html">
 
   <style is="custom-style" include="demo-pages-shared-styles">
     titanium-date-input {
@@ -25,6 +27,7 @@
 
 <body>
   <div class="vertical-section-container centered">
+    <h3>Simple Demo</h3>
     <demo-snippet>
       <template>
         <titanium-date-input label="My Birthday" auto-validate required error-message="Please use a valid date of birth"></titanium-date-input>
@@ -32,6 +35,16 @@
         <titanium-date-input label="Mom's Birthday" value="03/20/1960" required></titanium-date-input>
 
         <titanium-date-input label="Not Required"></titanium-date-input>
+
+      </template>
+    </demo-snippet>
+
+    <h3>Prefix Slot Demo</h3>
+    <demo-snippet>
+      <template>
+        <titanium-date-input label="Prefix Slot">
+          <iron-icon icon="alarm" slot="prefix">PREFIX</iron-icon>
+        </titanium-date-input>
       </template>
     </demo-snippet>
   </div>
