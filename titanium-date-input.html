@@ -6,8 +6,7 @@
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../paper-input/paper-input.html">
-
-<link rel="import" href="titanium-moment.html">
+<link rel="import" href="../moment-element/moment-import.html">
 <!--
 `titanium-date-input`
 
@@ -92,13 +91,13 @@
                     validator: {
                         type: String
                     }
-                }
+                };
             }
 
             static get observers() {
                 return [
                     '_onFocusedChanged(focused)'
-                ]
+                ];
             }
 
             connectedCallback() {

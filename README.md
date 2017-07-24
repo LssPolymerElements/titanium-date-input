@@ -1,5 +1,7 @@
 # titanium-date-input
 
+[![Build status](https://ci.appveyor.com/api/projects/status/vj7rfcqaqwcmint7/branch/master?svg=true)](https://ci.appveyor.com/project/aarondrabeck/titanium-date-input/branch/master)
+
 ## Introduction
 
 > A simple auto formatting date input for polymer 2.0
