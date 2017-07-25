@@ -169,9 +169,8 @@
                 } else {
                     this.invalid = !valid;
                 }
-                return valid;
+                return !this.invalid && valid;
             }
-
         }
         customElements.define(TitaniumDateInput.is, TitaniumDateInput);
     </script>
