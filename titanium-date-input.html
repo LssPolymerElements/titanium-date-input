@@ -28,9 +28,9 @@
                 ;
             }
         </style>
-        <paper-input id="input" always-float-label placeholder="[[placeholder]]" validator="[[validator]]" label="[[label]]" error-message="[[errorMessage]]"
-            required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" invalid="{{invalid}}" disabled="[[disabled]]"
-            focused="{{focused}}">
+        <paper-input id="input" always-float-label placeholder="[[placeholder]]" label="[[label]]" error-message="[[errorMessage]]"
+            required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" disabled="[[disabled]]" focused="{{focused}}"
+            validator="[[validator]]">
             <slot name="prefix" slot="prefix"></slot>
             <slot name="suffix" slot="suffix"></slot>
         </paper-input>
@@ -38,7 +38,7 @@
 
     <script>
         'use strict';
-        class TitaniumDateInput extends Polymer.mixinBehaviors([Polymer.IronFormElementBehavior],
+        class TitaniumDateInput extends Polymer.mixinBehaviors([Polymer.IronFormElementBehavior, Polymer.IronValidatableBehavior],
             Polymer.Element) {
             static get is() {
                 return 'titanium-date-input';
@@ -53,11 +53,6 @@
                         type: String,
                         notify: true,
                         observer: '_valueChanged'
-                    },
-                    invalid: {
-                        type: Boolean,
-                        value: false,
-                        notify: true
                     },
                     autoValidate: {
                         type: Boolean,
@@ -164,14 +159,19 @@
                     this.validate();
             }
 
+            _validate(value) {
+                return moment(value, this.datePattern, true).isValid();
+            }
+
             validate() {
-                let valid = this.$.input.validate();
-                if (this.value && this.value.length === 10) {
-                    this.invalid = !(moment(this.value, this.datePattern, true).isValid()); // jshint ignore:line
-                } else {
-                    this.invalid = !valid;
+                if (!this.required && !this.value) {
+                    this.$.input.invalid = false;
+                    return true;
                 }
-                return !this.invalid && valid;
+
+                let valid = this.$.input.validate() && this._validate(this.value);
+                this.$.input.invalid = !valid;
+                return valid;
             }
         }
         customElements.define(TitaniumDateInput.is, TitaniumDateInput);

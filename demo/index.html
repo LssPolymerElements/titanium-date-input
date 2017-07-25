@@ -10,7 +10,6 @@
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
 
-  <link rel="import" href="./x-demo.html">
   <link rel="import" href="../titanium-date-input.html">
   <link rel="import" href="../../iron-form/iron-form.html">
   <link rel="import" href="../../polymer/polymer.html">
@@ -32,9 +31,9 @@
       <template>
         <titanium-date-input label="My Birthday" auto-validate required error-message="Please use a valid date of birth"></titanium-date-input>
 
-        <titanium-date-input label="Mom's Birthday" value="03/20/1960" required></titanium-date-input>
+        <titanium-date-input label="Mom's Birthday" value="03/20/1960" auto-validate required error-message="Mom's Birthday is bad"></titanium-date-input>
 
-        <titanium-date-input label="Not Required"></titanium-date-input>
+        <titanium-date-input label="Not Required" auto-validate error-message="ANTHONY CAN SEE THIS IS AN ERROR"></titanium-date-input>
 
       </template>
     </demo-snippet>
@@ -42,7 +41,7 @@
     <h3>Prefix Slot Demo</h3>
     <demo-snippet>
       <template>
-        <titanium-date-input label="Prefix Slot">
+        <titanium-date-input label="Prefix Slot" auto-validate error-message="ANTHONY CAN SEE THIS IS AN ERROR">
           <iron-icon icon="alarm" slot="prefix">PREFIX</iron-icon>
         </titanium-date-input>
       </template>
