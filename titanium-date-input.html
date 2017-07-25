@@ -6,8 +6,7 @@
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../paper-input/paper-input.html">
-
-<link rel="import" href="titanium-moment.html">
+<link rel="import" href="../moment-element/moment-import.html">
 <!--
 `titanium-date-input`
 
@@ -31,7 +30,10 @@
         </style>
         <paper-input id="input" always-float-label placeholder="[[placeholder]]" validator="[[validator]]" label="[[label]]" error-message="[[errorMessage]]"
             required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" invalid="{{invalid}}" disabled="[[disabled]]"
-            focused="{{focused}}"></paper-input>
+            focused="{{focused}}">
+            <slot name="prefix" slot="prefix"></slot>
+            <slot name="suffix" slot="suffix"></slot>
+        </paper-input>
     </template>
 
     <script>
@@ -92,13 +94,13 @@
                     validator: {
                         type: String
                     }
-                }
+                };
             }
 
             static get observers() {
                 return [
                     '_onFocusedChanged(focused)'
-                ]
+                ];
             }
 
             connectedCallback() {

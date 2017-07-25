@@ -1,0 +1,21 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "service-worker.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.18.2",
+    "gulp": "^3.9.1",
+    "jshint": "^2.9.5"
+  },
+  "scripts": {
+    "lint": "jshint \"titanium-date-input.html\" --extract=always",
+    "test": "npm run lint"
+  },
+  "author": "",
+  "license": "ISC"
+}
