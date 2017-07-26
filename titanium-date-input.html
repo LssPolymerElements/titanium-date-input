@@ -110,6 +110,9 @@
             }
 
             _valueChanged(value, oldValue) {
+                if (typeof oldValue === 'undefined' || value === oldValue)
+                    return;
+
                 if (typeof value === "object")
                     value = moment(value, "MM/DD/YYYY").format("MM/DD/YYYY");
 
@@ -155,7 +158,7 @@
             }
 
             _onFocusedChanged(focused) {
-                if (!focused && this.autoValidate)
+                if (!focused)
                     this.validate();
             }
 
@@ -164,6 +167,9 @@
             }
 
             validate() {
+                if (typeof this.value === 'undefined')
+                    return;
+
                 if (!this.required && !this.value) {
                     this.$.input.invalid = false;
                     return true;
