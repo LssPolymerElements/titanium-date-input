@@ -20,14 +20,22 @@
                 <titanium-date-input label="Mom's Birthday" required error-message="Mom's Birthday is bad"></titanium-date-input>
 
                 <titanium-date-input label="Not Required" auto-validate error-message="ANTHONY CAN SEE THIS IS AN ERROR"></titanium-date-input>
+
+                <h3>Prefix Slot Demo</h3>
+                <titanium-date-input label="Prefix Slot" auto-validate required error-message="ANTHONY CAN SEE THIS IS AN ERROR">
+                    <iron-icon icon="alarm" slot="prefix">PREFIX</iron-icon>
+                </titanium-date-input>
+
+                <titanium-date-input disabled label="Prefix Slot" auto-validate required error-message="ANTHONY CAN SEE THIS IS AN ERROR">
+                    <iron-icon icon="alarm" slot="prefix">PREFIX</iron-icon>
+                </titanium-date-input>
+
+                <button on-click="submit">Validate this form</button>
+
             </form>
-            <button on-click="submit">Validate this form</button>
         </iron-form>
 
-        <h3>Prefix Slot Demo</h3>
-        <titanium-date-input label="Prefix Slot" auto-validate error-message="ANTHONY CAN SEE THIS IS AN ERROR">
-            <iron-icon icon="alarm" slot="prefix">PREFIX</iron-icon>
-        </titanium-date-input>
+
 
     </template>
     <script>

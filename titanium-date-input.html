@@ -5,7 +5,6 @@
 <link rel="import" href="../paper-input/paper-input-error.html">
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
-<link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../moment-element/moment-import.html">
 <!--
@@ -28,10 +27,26 @@
                 }
                 ;
             }
+
+             ::slotted(iron-icon) {
+                color: #737373;
+            }
+
+            paper-input[focused] ::slotted(iron-icon) {
+                color: var(--primary-color);
+            }
+
+            paper-input[error] ::slotted(iron-icon) {
+                color: var(--error-color);
+            }
+
+            paper-input[disabled] ::slotted(iron-icon) {
+                color: #B6B6B6;
+            }
         </style>
         <paper-input id="input" always-float-label placeholder="[[placeholder]]" label="[[label]]" error-message="[[errorMessage]]"
-            required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" disabled="[[disabled]]" focused="{{focused}}"
-            validator="[[validator]]">
+            required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" disabled$="[[disabled]]" focused$="{{focused}}"
+            validator="[[validator]]" invalid="{{error}}" error$="[[error]]">
             <slot name="prefix" slot="prefix"></slot>
             <slot name="suffix" slot="suffix"></slot>
         </paper-input>
@@ -83,6 +98,11 @@
                     },
                     validator: {
                         type: String
+                    },
+                    invalid: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        notify: true
                     }
                 };
             }
