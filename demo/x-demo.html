@@ -3,6 +3,7 @@
 <link rel="import" href="../../paper-input/paper-input.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="../../iron-icons/iron-icons.html">
+<link rel="import" href="../../titanium-responsive-icon/titanium-responsive-icon.html">
 <link rel="import" href="../titanium-date-input.html">
 
 <dom-module id="x-demo">
@@ -28,6 +29,10 @@
 
                 <titanium-date-input disabled label="Prefix Slot" auto-validate required error-message="ANTHONY CAN SEE THIS IS AN ERROR">
                     <iron-icon icon="alarm" slot="prefix">PREFIX</iron-icon>
+                </titanium-date-input>
+
+                <titanium-date-input label="Prefix Slot" auto-validate required error-message="ANTHONY CAN SEE THIS IS AN ERROR">
+                    <titanium-responsive-icon icon="alarm" slot="prefix"></titanium-responsive-icon>
                 </titanium-date-input>
 
                 <button on-click="submit">Validate this form</button>

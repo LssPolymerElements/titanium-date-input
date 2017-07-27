@@ -33,14 +33,17 @@
             }
 
             paper-input[focused] ::slotted(*) {
+                --iron-icon-fill-color: var(--primary-color);
                 color: var(--primary-color);
             }
 
             paper-input[error] ::slotted(*) {
+                --iron-icon-fill-color: var(--error-color);
                 color: var(--error-color);
             }
 
             paper-input[disabled] ::slotted(*) {
+                --iron-icon-fill-color: #B6B6B6;
                 color: #B6B6B6;
             }
         </style>
