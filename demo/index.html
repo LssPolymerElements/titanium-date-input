@@ -6,46 +6,17 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
   <title>Titanium Date Input Demo</title>
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
 
-  <link rel="import" href="../titanium-date-input.html">
-  <link rel="import" href="../../iron-form/iron-form.html">
-  <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="../../paper-input/paper-input.html">
-  <link rel="import" href="../../iron-icon/iron-icon.html">
-  <link rel="import" href="../../iron-icons/iron-icons.html">
+  <link rel="import" href="./x-demo.html">
 
   <style is="custom-style" include="demo-pages-shared-styles">
-    titanium-date-input {
-      margin: 16px;
-    }
+
   </style>
 </head>
 
 <body>
   <div class="vertical-section-container centered">
-    <h3>Simple Demo</h3>
-    <demo-snippet>
-      <template>
-        <titanium-date-input label="My Birthday" auto-validate required error-message="Please use a valid date of birth"></titanium-date-input>
-
-        <titanium-date-input label="Mom's Birthday" value="03/20/1960" auto-validate required error-message="Mom's Birthday is bad"></titanium-date-input>
-
-        <titanium-date-input label="Not Required" auto-validate error-message="ANTHONY CAN SEE THIS IS AN ERROR"></titanium-date-input>
-
-      </template>
-    </demo-snippet>
-
-    <h3>Prefix Slot Demo</h3>
-    <demo-snippet>
-      <template>
-        <titanium-date-input label="Prefix Slot" auto-validate error-message="ANTHONY CAN SEE THIS IS AN ERROR">
-          <iron-icon icon="alarm" slot="prefix">PREFIX</iron-icon>
-        </titanium-date-input>
-      </template>
-    </demo-snippet>
+    <x-demo></x-demo>
   </div>
 </body>
 

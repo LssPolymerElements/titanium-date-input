@@ -4,6 +4,7 @@
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../paper-input/paper-input-error.html">
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../moment-element/moment-import.html">
@@ -38,8 +39,7 @@
 
     <script>
         'use strict';
-        class TitaniumDateInput extends Polymer.mixinBehaviors([Polymer.IronFormElementBehavior, Polymer.IronValidatableBehavior],
-            Polymer.Element) {
+        class TitaniumDateInput extends Polymer.Element {
             static get is() {
                 return 'titanium-date-input';
             }
@@ -74,11 +74,6 @@
                         type: String,
                         value: 'mm/dd/yyyy'
                     },
-                    date: {
-                        type: Object,
-                        value: {},
-                        notify: true
-                    },
                     errorMessage: {
                         type: String
                     },
@@ -107,6 +102,10 @@
                 regex = regex.replace(/Y/gi, '\\d');
                 regex = regex.replace(/\+/g, '\\+');
                 this.$.input.pattern = regex;
+            }
+
+            ready() {
+                super.ready();
             }
 
             _valueChanged(value, oldValue) {
@@ -142,8 +141,7 @@
                 this.updateValueAndPreserveCaret(formattedValue.trim());
                 this.$.input.selectionStart = this.$.input.selectionEnd = start + slashesDifference;
 
-                if (this.autoValidate)
-                    this.validate();
+                this.validate();
             }
 
             updateValueAndPreserveCaret(newValue) {
@@ -162,21 +160,8 @@
                     this.validate();
             }
 
-            _validate(value) {
-                return moment(value, this.datePattern, true).isValid();
-            }
-
             validate() {
-                if (typeof this.value === 'undefined')
-                    return;
-
-                if (!this.required && !this.value) {
-                    this.$.input.invalid = false;
-                    return true;
-                }
-
-                let valid = this.$.input.validate() && this._validate(this.value);
-                this.$.input.invalid = !valid;
+                let valid = this.$.input.validate();
                 return valid;
             }
         }
