@@ -35,13 +35,13 @@
                     <titanium-responsive-icon icon="alarm" slot="prefix"></titanium-responsive-icon>
                 </titanium-date-input>
 
+                <titanium-date-input label="Different Pattern and Placeholder" date-pattern="yyyy/mm/dd" placeholder="yyyy/mm/dd" auto-validate
+                    required error-message="This is Required">
+                    <titanium-responsive-icon icon="alarm" slot="prefix"></titanium-responsive-icon>
+                </titanium-date-input>
                 <button on-click="submit">Validate this form</button>
-
             </form>
         </iron-form>
-
-
-
     </template>
     <script>
         class XDemo extends Polymer.Element {
