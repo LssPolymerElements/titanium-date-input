@@ -47,7 +47,7 @@
                 color: #B6B6B6;
             }
         </style>
-        <paper-input id="input" always-float-label placeholder="[[placeholder]]" label="[[label]]" error-message="[[errorMessage]]"
+        <paper-input type="text" id="input" always-float-label placeholder="[[placeholder]]" label="[[label]]" error-message="[[errorMessage]]"
             required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" disabled$="[[disabled]]" focused$="{{focused}}"
             validator="[[validator]]" invalid="{{error}}" error$="[[error]]" date-pattern="[[datePattern]]">
             <slot name="prefix" slot="prefix"></slot>
@@ -127,10 +127,6 @@
                 this.$.input.pattern = regex;
             }
 
-            ready() {
-                super.ready();
-            }
-
             _valueChanged(value, oldValue) {
                 if (typeof oldValue === 'undefined' || value === oldValue)
                     return;
@@ -143,7 +139,9 @@
 
                 let originalString = value ? value.toString() : '';
 
-                let start = this.$.input.selectionStart;
+                let nativeInput = this.$.input.shadowRoot.querySelector('#nativeInput');
+                let start = nativeInput.selectionStart;
+
                 let initialSlashesBeforeCaret = originalString.substr(0, start).split('/').length - 1;
                 originalString = originalString.replace(/\//g, '');
                 let shouldFormat = originalString.length <= this.datePattern.replace(/\//g, '').length;
@@ -162,17 +160,22 @@
                 let updatedSlashesBeforeCaret = formattedValue.substr(0, start).split('/').length - 1;
                 let slashesDifference = updatedSlashesBeforeCaret - initialSlashesBeforeCaret;
                 this.updateValueAndPreserveCaret(formattedValue.trim());
-                this.$.input.selectionStart = this.$.input.selectionEnd = start + slashesDifference;
+                // setTimeout hack needed for android
+                setTimeout(() => {
+                    nativeInput.selectionStart = nativeInput.selectionEnd = start + slashesDifference;
+                }, 0);
 
                 this.validate();
             }
 
             updateValueAndPreserveCaret(newValue) {
+                // taken from paper-input-behavior.html
+                let nativeInput = this.$.input.shadowRoot.querySelector('#nativeInput');
                 try {
-                    var start = this.inputElement.selectionStart;
+                    let start = nativeInput.selectionStart;
                     this.value = newValue;
-                    this.inputElement.selectionStart = start;
-                    this.inputElement.selectionEnd = start;
+                    nativeInput.selectionStart = start;
+                    nativeInput.selectionEnd = start;
                 } catch (e) {
                     this.value = newValue;
                 }
