@@ -139,7 +139,7 @@
 
                 let originalString = value ? value.toString() : '';
 
-                let nativeInput = this.$.input.shadowRoot.querySelector('#nativeInput');
+                let nativeInput = this.$.input.shadowRoot.querySelector('input');
                 let start = nativeInput.selectionStart;
 
                 let initialSlashesBeforeCaret = originalString.substr(0, start).split('/').length - 1;
@@ -170,7 +170,7 @@
 
             updateValueAndPreserveCaret(newValue) {
                 // taken from paper-input-behavior.html
-                let nativeInput = this.$.input.shadowRoot.querySelector('#nativeInput');
+                let nativeInput = this.$.input.shadowRoot.querySelector('input');
                 try {
                     let start = nativeInput.selectionStart;
                     this.value = newValue;
