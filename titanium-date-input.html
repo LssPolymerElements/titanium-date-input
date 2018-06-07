@@ -16,7 +16,7 @@
 <dom-module id="titanium-date-input">
     <template>
         <style>
-             :host {
+            :host {
                 display: block;
             }
 
@@ -28,7 +28,7 @@
                 ;
             }
 
-             ::slotted(*) {
+            ::slotted(*) {
                 color: #737373;
             }
 
@@ -128,7 +128,7 @@
             }
 
             _valueChanged(value, oldValue) {
-                if (typeof oldValue === 'undefined' || value === oldValue)
+                if (!value || value === oldValue)
                     return;
 
                 if (typeof value === "object")
