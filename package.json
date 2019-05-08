@@ -8,11 +8,13 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "browser-sync": "^2.18.2",
+    "browser-sync": "*",
+    "natives": "^1.1.6",
     "gulp": "^3.9.1",
     "jshint": "^2.9.5"
   },
   "scripts": {
+    "start": "gulp",
     "lint": "jshint \"titanium-date-input.html\" --extract=always",
     "test": "npm run lint"
   },
