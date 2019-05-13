@@ -42,6 +42,7 @@ skip_tags: true
 version: 1.0.{build}
 deploy:
 - provider: GitHub
-  auth_token: $env:github
+  auth_token:
+    secure: 835R9sxQXydWdUwDjztfctOF+vFyDjCudvzSiZV+UmxRzEM8FNYi/TEiAH5DWmot
   on:
     branch: master
