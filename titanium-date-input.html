@@ -22,9 +22,11 @@
 
             paper-input {
                 width: 100%;
+
                 --paper-input-container: {
                     padding-bottom: 0;
                 }
+
                 ;
             }
 
@@ -48,9 +50,9 @@
             }
         </style>
         <paper-input type="text" id="input" always-float-label placeholder="[[placeholder]]" label="[[label]]"
-            error-message="[[errorMessage]]" required="[[required]]" allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}"
-            disabled$="[[disabled]]" focused$="{{focused}}" validator="[[validator]]" invalid="{{invalid}}" error$="[[error]]"
-            date-pattern="[[datePattern]]">
+            error-message="[[errorMessage]]" required="[[required]]" auto-validate="[[autoValidate]]"
+            allowed-pattern="[0-9\/]" maxlength="10" value="{{value}}" disabled$="[[disabled]]" focused$="{{focused}}"
+            validator="[[validator]]" invalid="{{invalid}}" error$="[[error]]" date-pattern="[[datePattern]]">
             <slot name="prefix" slot="prefix"></slot>
             <slot name="suffix" slot="suffix"></slot>
         </paper-input>
@@ -111,12 +113,6 @@
                 };
             }
 
-            static get observers() {
-                return [
-                    '_onFocusedChanged(focused)'
-                ];
-            }
-
             connectedCallback() {
                 super.connectedCallback();
                 var regex = '';
@@ -165,8 +161,6 @@
                 setTimeout(() => {
                     nativeInput.selectionStart = nativeInput.selectionEnd = start + slashesDifference;
                 }, 0);
-
-                this.validate();
             }
 
             updateValueAndPreserveCaret(newValue) {
@@ -180,11 +174,6 @@
                 } catch (e) {
                     this.value = newValue;
                 }
-            }
-
-            _onFocusedChanged(focused) {
-                if (!focused)
-                    this.validate();
             }
 
             validate() {
