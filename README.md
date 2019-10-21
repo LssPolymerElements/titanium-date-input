@@ -17,17 +17,4 @@
 <titanium-date-input label="My Birthday" auto-validate required error-message="Valid Birthday Required"></titanium-date-input>
 ```
 
-## Installation
-
-> 
-#### For Development
-```
-git clone https://github.com/LssPolymerElements/titanium-date-input.git
-bower install
-polymer serve
-```
-
-#### For Production
-```
-bower install --save titanium-date-input
-```
+# This element has been deprecated therefor is no longer is maintained or supported. 
